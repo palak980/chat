@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Rooms</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        /* Custom CSS for chat rooms */
+        body {
+            padding: 0;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .room-list {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+        .room-item {
+            padding: 10px 15px;
+            margin-bottom: 10px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            cursor: pointer; /* Add cursor pointer */
+            transition: background-color 0.3s ease;
+        }
+        .room-item:hover {
+            background-color: #f0f0f0; /* Change background color on hover */
+        }
+        .create-room-form {
+            margin-top: 20px;
+        }
+        .create-room-form input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .create-room-form button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            border: none;
+            border-radius: 8px;
+            background-color: #0088cc;
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .create-room-form button:hover {
+            background-color: #005580;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>available Chat Rooms</h2>
+        <ul class="room-list">
+            {% for room in chat_rooms %}
+                <li class="room-item" onclick="joinChatRoom('{{ room.name }}')">{{ room.name }}</li>
+            {% endfor %}
+        </ul>
+        <h3>Create a New Room</h3>
+        <form method="post" class="create-room-form">
+            {% csrf_token %}
+            <input type="text" name="name" placeholder="Enter room name" required>
+            <h5>room name not be contain any space</h5>
+            <button type="submit"><i class="fas fa-plus"></i> Create Room</button>
+        </form>
+    </div>
+
+    <script>
+        function joinChatRoom(roomName) {
+            window.location.href = `/blog/chat_rooms/${roomName}/`;
+        }
+    </script>
+</body>
+</html>
